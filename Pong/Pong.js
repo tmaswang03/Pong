@@ -130,7 +130,7 @@ function init(){
 		}
 	}
 	// animations : 
-	var tmp = new Circle(200, 200, 20, Math.random()*10, 20); 
+	var tmp = new Circle(20, window.innerHeight/2, 10, Math.random()*10+1, 20); 
 	var rect = new Rect(innerWidth-100, 200, 0, 10, 30, 100); 
 	var score = new Score(0, innerWidth/2, 100, 18); 
 	// tmp is the ball 
@@ -156,7 +156,7 @@ function init(){
 		// update rectangle 
 		rect.update();
 		// the circle hits the rectangle then bounce away to the left 
-		if( tmp.x+tmp.radius<=rect.x && tmp.x+tmp.dx>=rect.x  && tmp.y<=rect.y+rect.width && tmp.y>=rect.y-rect.width ){
+		if( tmp.x+tmp.radius<=rect.x && tmp.x+tmp.radius+tmp.dx>=rect.x  && tmp.y<=rect.y+rect.width && tmp.y>=rect.y-rect.width ){
 			tmp.dx = -tmp.dx; ++score.val; 
 			if(score%5==0 && tmp.dx>tmp.minvel) --tmp.dx; 
 		}
@@ -182,4 +182,4 @@ init();
 // run init and initialize game 
 
 
-	
+		
