@@ -67,6 +67,7 @@ function init(){
 		this.dx = dx; this.dy = dy; 
 		this.radius = radius; this.minRadius = radius; 
 		this.color =  colorArray[1]
+		this.maxvel = 30, minvel = -30; 
 		// draw the circle 
 		this.draw = function(){
 			c.beginPath();
@@ -129,7 +130,7 @@ function init(){
 		}
 	}
 	// animations : 
-	var tmp = new Circle(200, 200, 8, 8, 20); 
+	var tmp = new Circle(200, 200, 20, Math.random()*10, 20); 
 	var rect = new Rect(innerWidth-100, 200, 0, 10, 30, 100); 
 	var score = new Score(0, innerWidth/2, 100, 18); 
 	// tmp is the ball 
@@ -155,8 +156,9 @@ function init(){
 		// update rectangle 
 		rect.update();
 		// the circle hits the rectangle then bounce away to the left 
-		if( (tmp.x+tmp.radius==rect.x ) && tmp.y<=rect.y+rect.width && tmp.y>=rect.y-rect.width ){
+		if( tmp.x+tmp.radius<=rect.x && tmp.x+tmp.dx>=rect.x  && tmp.y<=rect.y+rect.width && tmp.y>=rect.y-rect.width ){
 			tmp.dx = -tmp.dx; ++score.val; 
+			if(score%5==0 && tmp.dx>tmp.minvel) --tmp.dx; 
 		}
 		if(tmp.x+tmp.radius>=innerWidth){
 			// ball touches right wall, game over 
@@ -166,9 +168,8 @@ function init(){
 			c.fillStyle = colorArray[1]; 
 			// sincee game is over activate restart button and display final score 
 			resButton.disabled = false; 
-			c.fillText('Final Score: \n' + score.val, innerWidth/2, innerHeight/2); 
+			c.fillText('Final Score: ' + score.val, innerWidth/2, innerHeight/2); 
 			c.fillText('Click Anywhere to Restart', innerWidth/2, innerHeight/2+100); 
-
 		}
 		if(tmp.x+tmp.radius<innerWidth){
 			// if the ball is still in the game then draw the score and update the ball's position 
